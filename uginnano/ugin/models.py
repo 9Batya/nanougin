@@ -2,11 +2,11 @@ from django.db import models
 
 class DeviceType(models.Model):
     type_name = models.CharField(max_length=200)
-    parameters = models.ManyToManyField('DeviceTypeParametr')
+    parameters = models.ManyToManyField('Parametr')
     def __str__(self):
         return self.type_name
 
-class DeviceTypeParametr(models.Model):
+class Parametr(models.Model):
     parametr_name = models.CharField(max_length=200)
     def __str__(self):
         return self.parametr_name
@@ -21,7 +21,7 @@ class Device(models.Model):
     device_model = models.ForeignKey(DeviceModel, on_delete=models.CASCADE)
 
 
-class Parametr(models.Model):
+class DeviceParametr(models.Model):
     device_id = models.ForeignKey(DeviceType, on_delete=models.CASCADE)
     online = models.BooleanField(default = None)
     SN = models.CharField(max_length=200, default = None)
