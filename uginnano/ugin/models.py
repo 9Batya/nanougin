@@ -1,4 +1,5 @@
 from django.db import models
+import json
 
 class DeviceType(models.Model):
     type_name = models.CharField(max_length=200)
@@ -8,6 +9,7 @@ class DeviceType(models.Model):
 
 class Parametr(models.Model):
     parametr_name = models.CharField(max_length=200)
+    parametr_type = models.CharField(max_length=200, default=None)
     def __str__(self):
         return self.parametr_name
 
@@ -19,21 +21,21 @@ class DeviceModel(models.Model):
 
 class Device(models.Model):
     device_model = models.ForeignKey(DeviceModel, on_delete=models.CASCADE)
+    device_type_id = models.ForeignKey(DeviceType, on_delete=models.CASCADE,default=None)
+    parametrs = models.JSONField(default=dict, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        parameters_dict = {param.parametr_name: '' for param in self.device_type_id.parameters.all()}
+        if self.parametrs:
+            parameters_dict.update(self.parametrs)
+
+        self.parametrs = json.dumps(parameters_dict)
+        super(Device, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return str(self.id)
 
 
-class DeviceParametr(models.Model):
-    device_id = models.ForeignKey(DeviceType, on_delete=models.CASCADE)
-    online = models.BooleanField(default = None)
-    SN = models.CharField(max_length=200, default = None)
-    IP = models.CharField(max_length=200, default = None)
-    MAC = models.CharField(max_length=200, default = None)
-    role = models.CharField(max_length=200, default = None)
-    ports_number = models.IntegerField(default = None)
-    camera_number = models.CharField(max_length=200, default = None)
-    microphone = models.CharField(max_length=200, default = None)
-    view = models.IntegerField(default = None)
-    comment = models.CharField(max_length=200, default = None)
-    azimut = models.IntegerField(default=None)
-    camera_number = models.CharField(max_length=200,default = None)
-    antenna_height = models.IntegerField(default=None)
+
+
 

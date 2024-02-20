@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import DeviceType, DeviceModel, Device, DeviceParametr, Parametr
+from .models import DeviceType, DeviceModel, Device, Parametr
 
 # class DeviceModelinline(admin.StackedInline):
 #     model = DeviceModel
@@ -22,6 +22,8 @@ class Parametrinline(admin.StackedInline):
 class DeviceTypeAdmin(admin.ModelAdmin):
     filter_horizontal = ('parameters',)
 
+
+
 # class DeviceModelAdmin(admin.ModelAdmin):
 #     inlines = [Deviceinline]
 #     filter_horizontal = ('parameters',)
@@ -40,5 +42,9 @@ class DeviceTypeAdmin(admin.ModelAdmin):
 admin.site.register(DeviceType, DeviceTypeAdmin)
 
 admin.site.register(Parametr)
+
+admin.site.register(DeviceModel)
+
+admin.site.register(Device)
 
 
