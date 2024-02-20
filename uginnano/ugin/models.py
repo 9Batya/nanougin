@@ -1,5 +1,4 @@
 from django.db import models
-import json
 
 class DeviceType(models.Model):
     type_name = models.CharField(max_length=200)
@@ -24,13 +23,12 @@ class Device(models.Model):
     device_type_id = models.ForeignKey(DeviceType, on_delete=models.CASCADE,default=None)
     parametrs = models.JSONField(default=dict, null=True, blank=True)
 
-    def save(self, *args, **kwargs):
+    def save(self):
         parameters_dict = {param.parametr_name: '' for param in self.device_type_id.parameters.all()}
-        if self.parametrs:
-            parameters_dict.update(self.parametrs)
+        if self.parametrs=={}:
+            self.parametrs.update(parameters_dict)
 
-        self.parametrs = json.dumps(parameters_dict)
-        super(Device, self).save(*args, **kwargs)
+        return models.Model.save(self)
 
     def __str__(self):
         return str(self.id)
