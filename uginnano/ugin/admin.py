@@ -1,43 +1,25 @@
 from django.contrib import admin
-
+from django import forms
+from django.db import models
+from django_json_widget.widgets import JSONEditorWidget
 # Register your models here.
 from .models import DeviceType, DeviceModel, Device, Parametr
 
-# class DeviceModelinline(admin.StackedInline):
-#     model = DeviceModel
-#     extra = 1
-
-# class Deviceinline(admin.StackedInline):
-#     model = Device
-#     extra = 1
 
 class Parametrinline(admin.StackedInline):
     model = Device
     extra = 1
 
-# class ParametrInline(admin.StackedInline):
-#     model = Parametr
-#     extra = 1
-
 class DeviceTypeAdmin(admin.ModelAdmin):
     filter_horizontal = ('parameters',)
 
 
+@admin.register(Device)
+class DevicesModelAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.JSONField: {'widget': JSONEditorWidget},
+    }
 
-# class DeviceModelAdmin(admin.ModelAdmin):
-#     inlines = [Deviceinline]
-#     filter_horizontal = ('parameters',)
-
-
-# class DeviceAdmin(admin.ModelAdmin):
-#     inlines = [ParametrInline]
-
-
-
-
-# admin.site.register(Device, DeviceAdmin)
-
-# admin.site.register(DeviceModel, DeviceModelAdmin)
 
 admin.site.register(DeviceType, DeviceTypeAdmin)
 
@@ -45,6 +27,5 @@ admin.site.register(Parametr)
 
 admin.site.register(DeviceModel)
 
-admin.site.register(Device)
 
 

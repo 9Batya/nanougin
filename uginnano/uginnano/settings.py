@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ugin.apps.UginConfig'
+    'ugin.apps.UginConfig',
+    'django_json_widget'
 ]
 
 MIDDLEWARE = [

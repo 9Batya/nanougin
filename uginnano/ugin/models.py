@@ -1,5 +1,11 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.core.signals import request_finished
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
+def callback(sender, **kwargs):
+    print("Setting changed!")
 class DeviceType(models.Model):
     type_name = models.CharField(max_length=200)
     parameters = models.ManyToManyField('Parametr')
@@ -19,10 +25,14 @@ class DeviceModel(models.Model):
         return self.model_name
 
 class Device(models.Model):
+    device_type_id = models.ForeignKey(DeviceType, on_delete=models.CASCADE, default=None)
     device_model = models.ForeignKey(DeviceModel, on_delete=models.CASCADE)
-    device_type_id = models.ForeignKey(DeviceType, on_delete=models.CASCADE,default=None)
     parametrs = models.JSONField(default=dict, null=True, blank=True)
 
+    def clean(self):
+        if self.device_model != None:
+            if self.device_type_id != self.device_model.device_type:
+                raise ValidationError('Выбранный тип устройства не соответствует модели устройства')
     def save(self):
         parameters_dict = {param.parametr_name: '' for param in self.device_type_id.parameters.all()}
         if self.parametrs=={}:
