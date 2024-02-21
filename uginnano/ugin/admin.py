@@ -11,13 +11,13 @@ class Parametrinline(admin.StackedInline):
     extra = 1
 
 class DeviceTypeAdmin(admin.ModelAdmin):
-    filter_horizontal = ('parameters',)
+    filter_horizontal = ('parametr_names',)
 
 
 @admin.register(Device)
 class DevicesModelAdmin(admin.ModelAdmin):
     formfield_overrides = {
-        models.JSONField: {'widget': JSONEditorWidget},
+        models.JSONField: {'widget': JSONEditorWidget(mode='form')},
     }
 
 
