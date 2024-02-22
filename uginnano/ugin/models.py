@@ -1,11 +1,5 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.core.signals import request_finished
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
-
-def callback(sender, **kwargs):
-    print("Setting changed!")
 class DeviceType(models.Model):
     type_name = models.CharField(max_length=200)
     parametr_names = models.ManyToManyField('Parametr')
@@ -31,16 +25,25 @@ class DeviceModel(models.Model):
         return self.model_name
 
 class Device(models.Model):
+    model_list = str
+
     device_type_id = models.ForeignKey(DeviceType, on_delete=models.CASCADE,
                                        related_name='device_type_id', default=None)
-    device_model = models.ForeignKey(DeviceModel, on_delete=models.CASCADE,
-                                     related_name='device_model')
+    device_model = models.CharField(max_length=200, default=None, choices=model_list, null=True, blank=True)
     parametrs = models.JSONField(default=dict, null=True, blank=True)
 
+    def __init__(self, *args, **kwargs):
+        super(Device, self).__init__(*args, **kwargs)
+
+        # Обновляем choices в зависимости от значения device_type_id
+        if self.device_type_id:
+            model_list = [(model[0], model[0]) for model in self.device_type_id.device_type.values_list('model_name')]
+            self._meta.get_field('device_model').choices = model_list
+
     def clean(self):
-        if self.device_model:
-            if self.device_type_id != self.device_model.device_type:
-                raise ValidationError('Выбранный тип устройства не соответствует модели устройства')
+        # if self.device_model:
+        #     if self.device_type_id != self.device_model.device_type:
+        #         raise ValidationError('Выбранный тип устройства не соответствует модели устройства')
 
         data = self.device_type_id.parametr_names.values_list('parametr_name','parametr_type')
         name_type_dict = dict(data)
