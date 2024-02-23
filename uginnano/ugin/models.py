@@ -29,7 +29,7 @@ class DeviceModel(models.Model):
         return self.model_name
 
 class Device(models.Model):
-    model_list = str
+    model_list = list
 
     device_type_id = models.ForeignKey(DeviceType, on_delete=models.CASCADE,
                                        related_name='device_type_id', default=None)

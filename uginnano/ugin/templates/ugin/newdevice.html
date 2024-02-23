@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>flussonic dvr</title>
+</head>
+<body>
+    <h2>Определитель DVR</h2>
+        {% csrf_token %}
+        <table>
+        {{ form.as_table }}
+        </table>
+    <form method="post" action="/">
+        {% csrf_token %}
+        <input type="submit" value="Вернуться на главную" >
+    </form>
+</body>
+</html>
