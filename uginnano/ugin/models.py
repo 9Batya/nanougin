@@ -69,8 +69,8 @@ class Device(models.Model):
                     except Exception as exp:
                         raise ValidationError(f'Ошибка: "{exp}"')
 
-    def save(self):
-        return models.Model.save(self)
+    def save(self, *args, **kwargs):
+        super(Device, self).save(*args, **kwargs)
 
     def __str__(self):
         return str(self.id)

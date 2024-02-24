@@ -1,8 +1,10 @@
-from django.urls import path, include, re_path
+from django.urls import path
 from . import views
-#путь на самом деле будет 127.0.0.1:8000/flussonic, т.к. находится в urls приложения flussonic
 app_name = "ugin"
 urlpatterns = [
+    path('device/save/', views.device_save, name="device"),
     path('device/new/', views.new_device, name="devicenew"),
+    path('device/<int:id>/', views.device, name="device"),
+    path('deviceadd/', views.device_add, name="device"),
     path('', views.index, name='index'),
 ]

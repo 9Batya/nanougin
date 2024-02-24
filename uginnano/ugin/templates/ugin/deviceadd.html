@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>flussonic dvr</title>
+</head>
+<body>
+    <h2>{{ type_name }}</h2>
+    <h1>Имя сервера: {{ type_name }} Номер камеры: {{ type_name }} </h1>
+    <h1>Текущий DVR: {{ model }} time: {{ model }}</h1>
+   <form method="POST" action="/ugin/device/save/">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <input type="hidden" name="type" value="{{ type_id }}">
+        <input type="hidden" name="model" value="{{ model }}">
+        <input type="submit" value="Получить">
+    </form>
+</body>
+</html>

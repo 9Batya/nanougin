@@ -2,25 +2,19 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>flussonic dvr</title>
+    <title>create device</title>
 </head>
 <body>
-    <h2>Определитель DVR</h2>
+    <h2>Выберите тип устройства и модель</h2>
         {% csrf_token %}
-    <form method="post" action="/ugin/device/new/">
-        {% csrf_token %}
-        <table>
+    <form method = "GET">
         {{ form.as_table }}
-        </table>
-        <input type="submit" value="Сохранить" >
     </form>
-    <form method="post">
+    <form method="post" action="/ugin/deviceadd/">
         {% csrf_token %}
-        <input type="submit" value="Определить" >
-    </form>
-    <form method="post" action="/">
-        {% csrf_token %}
-        <input type="submit" value="Вернуться на главную" >
+        <input type="hidden" name="type" value="{{ type }}">
+        <input type="hidden" name="model" value="{{ model }}">
+        <input type="submit" value="Сохранить устройство и перейти к редактированию">
     </form>
 </body>
 </html>

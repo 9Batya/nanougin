@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Device {{ device }}</title>
+</head>
+<body>
+   <form method="GET">
+        {% csrf_token %}
+        <label for="{{ form.device_type_id.id_for_label }}">Тип устройства:</label>
+        <span>{{ form.device_type_id }}</span>
+
+        <label for="{{ form.device_model.id_for_label }}">Модель устройства:</label>
+        <span>{{ form.device_model.value }}</span>
+    {{ form.parametrs }}
+    </form>
+</body>
+</html>
