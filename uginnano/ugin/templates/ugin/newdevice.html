@@ -7,9 +7,17 @@
 <body>
     <h2>Определитель DVR</h2>
         {% csrf_token %}
+    <form method="post" action="/ugin/device/new/">
+        {% csrf_token %}
         <table>
         {{ form.as_table }}
         </table>
+        <input type="submit" value="Сохранить" >
+    </form>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Определить" >
+    </form>
     <form method="post" action="/">
         {% csrf_token %}
         <input type="submit" value="Вернуться на главную" >

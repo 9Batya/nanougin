@@ -36,6 +36,7 @@ class Device(models.Model):
     device_model = models.CharField(max_length=200, default=None, choices=model_list, null=True, blank=True)
     parametrs = models.JSONField(default=dict, null=True, blank=True)
 
+
     def clean(self):
         # if self.device_model:
         #     if self.device_type_id != self.device_model.device_type:
@@ -45,6 +46,7 @@ class Device(models.Model):
                               r'[a-z0-9]{2}:[a-z0-9]{2}$')
 
         data = self.device_type_id.parametr_names.values_list('parametr_name','parametr_type')
+
         name_type_dict = dict(data)
         for key, value in self.parametrs.items():
             if value:

@@ -13,6 +13,11 @@ class ModelTest(TestCase):
     def test_queryset(self):
         queryset1 = DeviceType.objects.values_list('pk','type_name')
         queryset2 = Parametr.objects.values()
+        type_id = DeviceType.objects.get(pk=1)
+        devicemodel = type_id.device_type.create(model_name='Hiwatch')
+        print(devicemodel)
+        device = type_id.device_type.create()
+        device_values = Device.objects.values()
         print([device_type for device_type in queryset1])
-        print(queryset1, queryset2)
+        print(queryset1, queryset2, devicemodel, device_values)
 

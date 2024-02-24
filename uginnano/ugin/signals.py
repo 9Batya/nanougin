@@ -17,3 +17,4 @@ def update_device_model_choices(sender, instance, **kwargs):
         if instance.parametrs == {}:
             instance.parametrs.update(parametr_names_dict)
 
+
