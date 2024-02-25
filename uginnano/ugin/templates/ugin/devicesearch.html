@@ -15,11 +15,11 @@
     </form>
     <form method="post" action="/ugin/">
         {% csrf_token %}
-        <input type="submit" value="Вернуться к приложению" >
+        <input type="submit" value="Вернуться обратно" >
     </form>
     <ul>
         {% for i in id %}
-        <li><a href="/ugin/device/{{ i }}">{{ i }}</a></li>
+        <li><a href="/ugin/device/{{ i }}">ID {{ i }}</a></li>
         {% endfor %}
     </ul>
 </body>

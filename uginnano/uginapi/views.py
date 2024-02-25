@@ -2,7 +2,7 @@ from ugin.models import DeviceType, DeviceModel, Device
 from .serializers import DeviceTypeSerializer, DeviceModelSerializer, DeviceSerializer
 from rest_framework import generics
 
-# Create your views here.
+#Представления, List дает представлении о всех экземплярах, Detail о конкретном, соответствуют своим сериализаторам
 class DeviceTypeList(generics.ListCreateAPIView):
     queryset = DeviceType.objects.all()
     serializer_class = DeviceTypeSerializer

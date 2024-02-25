@@ -1,7 +1,10 @@
 from django.core.exceptions import ValidationError
 import ipaddress
 import re
-
+"""
+Валидация параметров, используется в формах и модели Device, валидируются типы данных, MAC, ip. Входные данные
+device_type_id, parametrs, device_model экземпляра Device
+"""
 class valid:
     def __init__(self, device_type_id, parametrs, devicemodel):
         self.device_type_id = device_type_id
@@ -32,6 +35,6 @@ class valid:
                         ipaddress.ip_address(value)
                     except Exception as exp:
                         raise ValidationError(f'Ошибка: "{exp}"')
-        return {'status': 'unsupported'}
+        return {'status': 'sucsess'}
 
 

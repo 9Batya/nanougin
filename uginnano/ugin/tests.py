@@ -1,6 +1,9 @@
 from django.test import TestCase
 from .models import DeviceType, Device, DeviceModel, Parametr
+
+# Здесь тесты для проверки выводимых данных, но можно использовать и как проверку queryset
 class ModelTest(TestCase):
+
     def setUp(self):
         # Модели для тестов
         DeviceType.objects.create(type_name='Коммутатор')
@@ -11,7 +14,6 @@ class ModelTest(TestCase):
 
 
     def test_queryset(self):
-        #Тесты queryset, не ищите логики, просто проверял что выдает запрос
         queryset2 = Parametr.objects.values()
         type_id = DeviceType.objects.get(pk=1)
         p1 = Parametr.objects.get(pk=1)

@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 app_name = "uginapi"
+#Маршруты для api
 urlpatterns = [
     path('devices/<int:pk>/', views.DeviceDetail.as_view(), name='devices-detail'),
     path('devicetypes/<int:pk>/', views.DeviceTypeDetail.as_view(), name='devicetype-detail'),
