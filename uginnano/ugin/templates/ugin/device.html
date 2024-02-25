@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html>
+{{ form.media.css }}
+{{ form.media.js }}
 <head>
     <meta charset="utf-8" />
     <title>Device {{ device }}</title>
 </head>
 <body>
-   <form method="GET">
+   <form method="POST" action="/ugin/device/edit/">
         {% csrf_token %}
-        <label for="{{ form.device_type_id.id_for_label }}">Тип устройства:</label>
-        <span>{{ form.device_type_id }}</span>
+        {% csrf_token %}
+    <label>Тип устройства:</label>
+    <span>{{ devicetype }}</span>
 
-        <label for="{{ form.device_model.id_for_label }}">Модель устройства:</label>
-        <span>{{ form.device_model.value }}</span>
-    {{ form.parametrs }}
+    <label>Модель устройства:</label>
+    <span>{{ devicemodel }}</span>
+        {{ form.as_table }}
+        <input type="hidden" name="device" value="{{ device }}">
+        <input type="hidden" name="model" value="{{ devicemodel }}">
+        <input type="submit" value="Сохранить">
     </form>
 </body>
 </html>

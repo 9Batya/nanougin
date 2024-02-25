@@ -2,7 +2,7 @@ from django.test import TestCase
 from .models import DeviceType, Device, DeviceModel, Parametr
 class ModelTest(TestCase):
     def setUp(self):
-        # Создайте объекты модели для использования в тестах
+        # Модели для тестов
         DeviceType.objects.create(type_name='Коммутатор')
         DeviceType.objects.create(type_name='Камера')
         Parametr.objects.create(parametr_name='ports', parametr_type='int')
@@ -11,16 +11,19 @@ class ModelTest(TestCase):
 
 
     def test_queryset(self):
-        queryset1 = DeviceType.objects.values_list('pk','type_name')
-        queryset3 = DeviceType.objects.values_list('parametr_names')
+        #Тесты queryset, не ищите логики, просто проверял что выдает запрос
         queryset2 = Parametr.objects.values()
         type_id = DeviceType.objects.get(pk=1)
+        p1 = Parametr.objects.get(pk=1)
+        p3 = Parametr.objects.get(pk=3)
+        type_id.parametr_names.add(p1)
+        type_id.parametr_names.add(p3)
         device = type_id.device_type_id.create()
         devicemodel = type_id.device_type.create(model_name='Hiwatch')
-        model = DeviceModel.objects.filter(device_type=type_id).values_list('model_name')
-        # print(devicemodel)
-        # device_values = Device.objects.values()
-        # print([device_type for device_type in queryset1])
-        # print(queryset1, queryset2, devicemodel, device_values, device, queryset3)
-        print(model)
+        device.device_model = devicemodel
+        queryset1 = DeviceType.objects.values_list('pk','type_name')
+        queryset3 = DeviceType.objects.values_list('parametr_names')
+        model = device.device_model
+        print(queryset1, queryset2, device, queryset3, devicemodel, model)
+
 

@@ -38,10 +38,6 @@ class Device(models.Model):
 
 
     def clean(self):
-        # if self.device_model:
-        #     if self.device_type_id != self.device_model.device_type:
-        #         raise ValidationError('Выбранный тип устройства не соответствует модели устройства')
-
         regexmac = re.compile(r'^[a-z0-9]{2}:[a-z0-9]{2}:[a-z0-9]{2}:[a-z0-9]{2}:'
                               r'[a-z0-9]{2}:[a-z0-9]{2}$')
 

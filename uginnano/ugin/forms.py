@@ -1,5 +1,6 @@
 from django import forms
-from .models import Device, DeviceType, DeviceModel
+from .models import Device, DeviceType
+from django_json_widget.widgets import JSONEditorWidget
 select_device_type = [('---------', '---------')] + [device_type for device_type in
                       DeviceType.objects.values_list('pk','type_name')]
 class DeviceFormNew(forms.Form):
@@ -16,6 +17,9 @@ class DeviceForm(forms.ModelForm):
         model = Device
         fields = ['parametrs']
         labels = {'parametrs': 'Парпаметры устройства'}
+        widgets = {
+            'parametrs': JSONEditorWidget(mode='form'),
+        }
 
 class DeviceGetForm(forms.ModelForm):
 
@@ -23,6 +27,8 @@ class DeviceGetForm(forms.ModelForm):
     #                                       empty_label="Категория не выбрана", label="Категории")
     class Meta:
         model = Device
-        fields = ['device_type_id', 'device_model', 'parametrs']
-        labels = {'device_type_id': 'Тип устройства', 'device_model': 'Модель устройства',
-                  'parametrs': 'Парпаметры устройства'}
+        fields = ['parametrs']
+        labels = {'parametrs': 'Парпаметры устройства'}
+        widgets = {
+            'parametrs': JSONEditorWidget(mode='form'),
+        }

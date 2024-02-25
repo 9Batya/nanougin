@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from .forms import DeviceFormNew, DeviceForm, DeviceGetForm
 from .models import DeviceType, DeviceModel, Device
+from .serializers import DeviceTypeSerializer
+from rest_framework import generics
 import json
 def index(request):
     return render(request, "ugin/ugin.html")
@@ -41,7 +43,17 @@ def device_save(request):
         parametrs = json.loads(request.POST.get("parametrs"))
         device = type_name.device_type_id.create()
         device.device_model = request.POST.get("model")
-        device.parametrs =parametrs
+        device.parametrs = parametrs
+        device.save()
+    return HttpResponseRedirect("/ugin/")
+
+def device_edit(request):
+    if request.method == "POST":
+        device_id = request.POST.get("device")
+        device = Device.objects.get(pk=device_id)
+        parametrs = json.loads(request.POST.get("parametrs"))
+        print(parametrs)
+        device.parametrs = parametrs
         device.save()
     return HttpResponseRedirect("/ugin/")
 
@@ -49,12 +61,21 @@ def device_save(request):
 def device(request, id):
     try:
         device = Device.objects.get(pk=id)
-        print(device)
-
-        if request.method == "GET":
-            deviceform = DeviceGetForm(instance=device)
-            return render(request, "ugin/device.html", {"device": device,"form": deviceform})
-        else:
-            return render(request, "ugin/device.html", {"device": device})
+        devicemodel = device.device_model
+        devicetype = device.device_type_id
+        data = {"device": device,"devicemodel": devicemodel, "devicetype": devicetype}
+        deviceform = DeviceGetForm(instance=device)
+        data['form'] = deviceform
+        return render(request, "ugin/device.html", context=data)
     except Device.DoesNotExist:
         return HttpResponseNotFound("<h2>Device not found</h2>")
+
+
+class DeviceTypeList(generics.ListCreateAPIView):
+    queryset = DeviceType.objects.all()
+    serializer_class = DeviceTypeSerializer
+
+
+class DeviceTypeDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = DeviceType.objects.all()
+    serializer_class = DeviceTypeSerializer
