@@ -5,6 +5,6 @@ from . import views
 urlpatterns = [
     path("ugin/", include("ugin.urls")),
     path("admin/", admin.site.urls),
-    path('api/', include('ugin.urls')),
+    path('api/', include('uginapi.urls')),
     path('', views.index),
 ]

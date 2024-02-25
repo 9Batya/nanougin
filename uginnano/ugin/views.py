@@ -2,8 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from .forms import DeviceFormNew, DeviceForm, DeviceGetForm
 from .models import DeviceType, DeviceModel, Device
-from .serializers import DeviceTypeSerializer
-from rest_framework import generics
 import json
 def index(request):
     return render(request, "ugin/ugin.html")
@@ -69,13 +67,3 @@ def device(request, id):
         return render(request, "ugin/device.html", context=data)
     except Device.DoesNotExist:
         return HttpResponseNotFound("<h2>Device not found</h2>")
-
-
-class DeviceTypeList(generics.ListCreateAPIView):
-    queryset = DeviceType.objects.all()
-    serializer_class = DeviceTypeSerializer
-
-
-class DeviceTypeDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = DeviceType.objects.all()
-    serializer_class = DeviceTypeSerializer
