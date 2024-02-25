@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponseNotFound
+from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse
 from .forms import DeviceFormNew, DeviceForm, DeviceGetForm, DeviceSearch
 from .models import DeviceType, DeviceModel, Device
+from .validparams import valid
 import json
 def ugin(request):
     return render(request, "ugin/ugin.html")
@@ -39,21 +40,33 @@ def device_save(request):
         type_name = DeviceType.objects.get(pk=type_id)
         parametrs = json.loads(request.POST.get("parametrs"))
         device = type_name.device_type_id.create()
-        device.device_model = request.POST.get("model")
+        model = request.POST.get("model")
+        device.device_model = model
         device.parametrs = parametrs
-        device.save()
-    return HttpResponseRedirect("/ugin/")
+        check_errors = valid(type_name, parametrs, model)
+        try:
+            check_errors.validation()
+            device.save()
+            return HttpResponseRedirect("/ugin/")
+        except Exception as exp:
+            return HttpResponse(f'Неверно введены параметры {exp}')
+
+
+
 
 def device_edit(request):
     if request.method == "POST":
         device_id = request.POST.get("device")
         device = Device.objects.get(pk=device_id)
         parametrs = json.loads(request.POST.get("parametrs"))
-        print(parametrs)
         device.parametrs = parametrs
-        device.save()
-    return HttpResponseRedirect("/ugin/")
-
+        check_errors = valid(device.device_type_id, parametrs, device.device_model)
+        try:
+            check_errors.validation()
+            device.save()
+            return HttpResponseRedirect("/ugin/")
+        except Exception as exp:
+            return HttpResponse(f'Неверно введены параметры {exp}')
 
 def device(request, id):
     try:
@@ -75,7 +88,6 @@ def device_search(request):
         #Возвращает список device.id, у которых такой ip адрес
         id = [device.id for device in devices]
         data = {'id': id, 'form': devicesearch_form}
-        print(id)
         return render(request, "ugin/devicesearch.html", context=data)
     else:
         return render(request, "ugin/devicesearch.html",{'form': devicesearch_form})
