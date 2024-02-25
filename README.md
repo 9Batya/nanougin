@@ -1,1 +1,1 @@
-Просто прописать pip install -r requirements.txt, проект должен запуститься без проблем, при условии, что версия python 3.10, 3.11, 3.12, так как в проекте django 5
+Просто прописать git clone git@github.com:9Batya/nanougin.git, после скачивания файлов, pip install -r requirements.txt, проект должен запуститься без проблем, при условии, что версия python 3.10, 3.11, 3.12, так как в проекте django 5
