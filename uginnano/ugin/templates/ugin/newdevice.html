@@ -16,5 +16,9 @@
         <input type="hidden" name="model" value="{{ model }}">
         <input type="submit" value="Перейти к редактированию параметров">
     </form>
+    <form method="post" action="/ugin/">
+        {% csrf_token %}
+        <input type="submit" value="Вернуться к приложению" >
+    </form>
 </body>
 </html>

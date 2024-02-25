@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponseNotFound
-from .forms import DeviceFormNew, DeviceForm, DeviceGetForm
+from .forms import DeviceFormNew, DeviceForm, DeviceGetForm, DeviceSearch
 from .models import DeviceType, DeviceModel, Device
 import json
-def index(request):
+def ugin(request):
     return render(request, "ugin/ugin.html")
 
 def new_device(request):
@@ -28,7 +28,6 @@ def device_add(request):
     parametr_names_dict = {param['parametr_name']: ''
                            for param in type_name.parametr_names.values('parametr_name')}
     initial_data = {'device_type_id': type_id, 'device_model': model, 'parametrs': parametr_names_dict}
-    print(initial_data)
     deviceform = DeviceForm(initial=initial_data)
 
     data = {'form': deviceform, 'type_name': type_name,'model': model, 'type_id': type_id}
@@ -67,3 +66,16 @@ def device(request, id):
         return render(request, "ugin/device.html", context=data)
     except Device.DoesNotExist:
         return HttpResponseNotFound("<h2>Device not found</h2>")
+
+def device_search(request):
+    devicesearch_form = DeviceSearch()
+    if request.method == "POST":
+        device_ip = request.POST.get("device_ip")
+        devices = Device.objects.filter(parametrs__ip=device_ip)
+        #Возвращает список device.id, у которых такой ip адрес
+        id = [device.id for device in devices]
+        data = {'id': id, 'form': devicesearch_form}
+        print(id)
+        return render(request, "ugin/devicesearch.html", context=data)
+    else:
+        return render(request, "ugin/devicesearch.html",{'form': devicesearch_form})

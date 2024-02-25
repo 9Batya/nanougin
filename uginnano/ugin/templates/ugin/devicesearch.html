@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>device search</title>
+</head>
+<body>
+    <h1>Поиск устройства</h1>
+    <form method="post" action="/ugin/devicesearch/">
+        <table>
+        {% csrf_token %}
+        {{ form.as_table }}
+        </table>
+        <input type="submit" value="Найти">
+    </form>
+    <form method="post" action="/ugin/">
+        {% csrf_token %}
+        <input type="submit" value="Вернуться к приложению" >
+    </form>
+    <ul>
+        {% for i in id %}
+        <li><a href="/ugin/device/{{ i }}">{{ i }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

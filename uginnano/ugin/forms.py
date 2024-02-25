@@ -22,9 +22,6 @@ class DeviceForm(forms.ModelForm):
         }
 
 class DeviceGetForm(forms.ModelForm):
-
-    # device_model = forms.ModelChoiceField(queryset=DeviceModel.objects.filter(device_type=device_type_id).values_list('model_name'),
-    #                                       empty_label="Категория не выбрана", label="Категории")
     class Meta:
         model = Device
         fields = ['parametrs']
@@ -32,3 +29,7 @@ class DeviceGetForm(forms.ModelForm):
         widgets = {
             'parametrs': JSONEditorWidget(mode='form'),
         }
+
+class DeviceSearch(forms.Form):
+    device_ip = forms.CharField(label='ip адрес',help_text='Введите ip адрес устройства')
+    field_order = ["device_ip"]

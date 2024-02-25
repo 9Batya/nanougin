@@ -4,4 +4,11 @@
     <ul>
         <li><a href="{% url 'ugin:devicenew' %}">Перейти к созданию устрйоства</a></li>
     </ul>
+    <ul>
+        <li><a href="{% url 'ugin:device_search' %}">Поиск устройства</a></li>
+    </ul>
+    <form method="post" action="/">
+        {% csrf_token %}
+        <input type="submit" value="Вернуться на главную" >
+    </form>
 </html>
