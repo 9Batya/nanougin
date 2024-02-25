@@ -7,9 +7,9 @@ class valid:
         self.device_type_id = device_type_id
         self.parametrs = parametrs
         self.device_model = devicemodel
-        self.regexmac = re.compile(r'^[a-z0-9]{2}:[a-z0-9]{2}:[a-z0-9]{2}:[a-z0-9]{2}:'
-                      r'[a-z0-9]{2}:[a-z0-9]{2}$')
     def validation(self):
+        regexmac = re.compile(r'^[a-z0-9]{2}:[a-z0-9]{2}:[a-z0-9]{2}:[a-z0-9]{2}:'
+                              r'[a-z0-9]{2}:[a-z0-9]{2}$')
         data = self.device_type_id.parametr_names.values_list('parametr_name', 'parametr_type')
         name_type_dict = dict(data)
         for key, value in self.parametrs.items():
@@ -24,7 +24,7 @@ class valid:
                     elif name_type_dict[key] == 'bool' and not isinstance(value, bool):
                         raise ValidationError(f'Значение для параметра "{key}" должно быть булевым')
                 if key == 'MAC':
-                    match = self.regexmac.search(value)
+                    match = regexmac.search(value)
                     if not match:
                         raise ValidationError(f'Значение "{value}" не соответствует виду aa:aa:aa:aa:aa:aa')
                 elif key == 'ip':
