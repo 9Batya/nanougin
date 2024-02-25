@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 app_name = "ugin"
+
+#Маршруты приложения
 urlpatterns = [
     path('device/save/', views.device_save, name="device_save"),
     path('device/edit/', views.device_edit, name="device_edit"),
