@@ -1,15 +1,14 @@
-<!DOCTYPE html>
 <html>
 {{ form.media.css }}
 {{ form.media.js }}
 <head>
     <meta charset="utf-8" />
-    <title>device add</title>
+    <title>create device</title>
 </head>
 <body>
     <h1>Тип устройства: {{ type_name }}</h1>
     <h1>Модель устройства: {{ model }}</h1>
-   <form method="POST" action="/ugin/device/save/">
+    <form method="POST" action="/ugin/device/save/">
         {% csrf_token %}
         {{ form.as_table }}
         <input type="hidden" name="type" value="{{ type_id }}">

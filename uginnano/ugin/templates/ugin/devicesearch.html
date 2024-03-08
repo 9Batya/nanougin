@@ -6,24 +6,31 @@
     <title>device search</title>
 </head>
 <body>
-    <div class="wrapper">  <!-- Обертка для стилей -->
-        <div><h1>Поиск устройства</h1>
-        <form method="post" action="/ugin/devicesearch/">
-            <table>
-            {% csrf_token %}
-            {{ form.as_table }}
-            </table>
-            <input type="submit" value="Найти">
-        </form>
-        <form method="post" action="/ugin/">
-            {% csrf_token %}
-            <input type="submit" value="Вернуться обратно" >
-        </form>
-        <ul>
-            {% for i in id %}
-            <li><a href="/ugin/device/{{ i }}">ID {{ i }}</a></li>
-            {% endfor %}
-        </ul></div>
+    <div class="wrapper">
+        <div>
+            <h1>Поиск устройства</h1>
+            <form>
+
+            </form>
+            <form method="post" action="/ugin/devicesearch/">
+                {% csrf_token %}
+                {{ form.as_table }}
+                <input type="submit" value="Найти">
+            </form>
+
+            <form method="post" action="/ugin/">
+                {% csrf_token %}
+                <input type="submit" value="Вернуться обратно" >
+            </form>
+            <ul>
+                {% for i in id %}
+                <li><a href="/ugin/device/{{ i }}">ID {{ i }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
+</body>
+<body>
+
 </body>
 </html>

@@ -1,24 +1,29 @@
-<!DOCTYPE html>
+{% load static %}
 <html>
 <head>
+    <link rel="stylesheet" href="{% static 'ugin/style.css' %}">
     <meta charset="utf-8" />
     <title>create device</title>
 </head>
 <body>
-    <h2>Выберите тип устройства и модель</h2>
-        {% csrf_token %}
-    <form method = "GET">
-        {{ form.as_table }}
-    </form>
-    <form method="post" action="/ugin/deviceadd/">
-        {% csrf_token %}
-        <input type="hidden" name="type" value="{{ type }}">
-        <input type="hidden" name="model" value="{{ model }}">
-        <input type="submit" value="Перейти к редактированию параметров">
-    </form>
-    <form method="post" action="/ugin/">
-        {% csrf_token %}
-        <input type="submit" value="Вернуться к приложению" >
-    </form>
+    <div class="wrapper">
+        <div>
+            <h2>Выберите тип устройства и модель</h2>
+            {% csrf_token %}
+            <form method = "GET">
+                {{ form.as_table }}
+            </form>
+            <form method="post" action="/ugin/deviceadd/">
+                {% csrf_token %}
+                <input type="hidden" name="type" value="{{ type }}">
+                <input type="hidden" name="model" value="{{ model }}">
+                <input type="submit" value="Перейти к редактированию параметров">
+            </form>
+            <form method="post" action="/ugin/">
+                {% csrf_token %}
+                <input type="submit" value="Вернуться к приложению" >
+            </form>
+        </div>
+    </div>
 </body>
 </html>
