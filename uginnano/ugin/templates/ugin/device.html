@@ -2,13 +2,13 @@
 <html>
 <head>
     <link rel="stylesheet" href="{% static 'ugin/style.css' %}">
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>main</title>
 </head>
 <body>
-    <div class="wrapper">
-        <div>
-            <form method="POST" action="/ugin/device/edit/">
+<div class="wrapper">
+    <div>
+        <form method="POST" action="/ugin/device/edit/">
             {% csrf_token %}
             {% csrf_token %}
             <label>Тип устройства:</label>
@@ -16,16 +16,16 @@
 
             <label>Модель устройства:</label>
             <span>{{ devicemodel }}</span>
-                {{ form.as_table }}
-                <input type="hidden" name="device" value="{{ device }}">
-                <input type="hidden" name="model" value="{{ devicemodel }}">
-                <input type="submit" value="Сохранить">
-            </form>
-            <form method="post" action="/ugin/">
-                {% csrf_token %}
-                <input type="submit" value="Вернуться к приложению" >
-            </form>
-        </div>
+            {{ form.as_table }}
+            <input type="hidden" name="device" value="{{ device }}">
+            <input type="hidden" name="model" value="{{ devicemodel }}">
+            <input type="submit" value="Сохранить">
+        </form>
+        <form method="post" action="/ugin/">
+            {% csrf_token %}
+            <input type="submit" value="Вернуться к приложению">
+        </form>
     </div>
+</div>
 </body>
 </html>

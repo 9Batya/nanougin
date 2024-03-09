@@ -45,8 +45,8 @@ def device_add(request):
 def device_save(request):
     if request.method == "POST":
         values_to_remove = ['csrfmiddlewaretoken', 'type', 'model', 'initial-parametrs']
-        parametrs = {key:request.POST.get(key)
-                         for key in request.POST if key not in values_to_remove}
+        parametrs = {key: request.POST.get(key)
+                     for key in request.POST if key not in values_to_remove}
         type_id = request.POST.get("type")
         type_name = DeviceType.objects.get(pk=type_id)
         model = request.POST.get("model")

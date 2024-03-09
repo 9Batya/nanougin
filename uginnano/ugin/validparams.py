@@ -27,7 +27,7 @@ class valid:
             except ValueError:
                 pass
 
-    #Валидация
+    # Валидация
     def validation(self):
         regexmac = re.compile(r'^[a-z0-9]{2}:[a-z0-9]{2}:[a-z0-9]{2}:[a-z0-9]{2}:'
                               r'[a-z0-9]{2}:[a-z0-9]{2}$')

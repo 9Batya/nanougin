@@ -1,6 +1,5 @@
 from django import forms
 from .models import Device, DeviceType
-from django_json_widget.widgets import JSONEditorWidget
 import json
 from django.forms import TextInput
 
@@ -20,14 +19,12 @@ class DeviceFormNew(forms.Form):
     field_order = ["device_type", 'device_model']
 
 
-
 # Форма для изменения параметров и последующего сохранения (/ugin/deviceadd/)
 class DynamicForm(forms.Form):
     def __init__(self, parametrs, *args, **kwargs):
         super(DynamicForm, self).__init__(*args, **kwargs)
         for key, value in parametrs.items():
             self.fields[key] = forms.CharField(initial=value, label=key)
-
 
 
 class CustomJSONWidget(TextInput):
@@ -37,9 +34,9 @@ class CustomJSONWidget(TextInput):
         data_dict = json.loads(value)
 
         parametrs_form = DynamicForm(parametrs=data_dict)
-        parametrs_form.is_valid()  # Вызываем для проведения валидации
 
         return parametrs_form.as_p()
+
 
 class DeviceForm(forms.ModelForm):
     class Meta:
@@ -49,7 +46,6 @@ class DeviceForm(forms.ModelForm):
         widgets = {
             'parametrs': CustomJSONWidget,
         }
-
 
 
 # Форма для поиска устройств (/ugin/devicesearch/)
