@@ -37,7 +37,6 @@ def device_add(request):
                            for param in type_name.parametr_names.values('parametr_name')}
     initial_data = {'device_type_id': type_id, 'device_model': model, 'parametrs': parametr_names_dict}
     deviceform = DeviceForm(initial=initial_data)
-
     data = {'form': deviceform, 'type_name': type_name, 'model': model, 'type_id': type_id}
     return render(request, "ugin/deviceadd.html", context=data)
 
@@ -45,11 +44,14 @@ def device_add(request):
 # view для сохранения, используется в html deviceadd
 def device_save(request):
     if request.method == "POST":
+        values_to_remove = ['csrfmiddlewaretoken', 'type', 'model', 'initial-parametrs']
+        parametrs = {key:request.POST.get(key)
+                         for key in request.POST if key not in values_to_remove}
         type_id = request.POST.get("type")
         type_name = DeviceType.objects.get(pk=type_id)
-        parametrs = json.loads(request.POST.get("parametrs"))
         model = request.POST.get("model")
         check_errors = valid(type_name, parametrs, model)
+        check_errors.convert()
         try:
             check_errors.validation()
             if check_errors.validation()['status'] == 'sucsess':
@@ -67,9 +69,12 @@ def device_edit(request):
     if request.method == "POST":
         device_id = request.POST.get("device")
         device = Device.objects.get(pk=device_id)
-        parametrs = json.loads(request.POST.get("parametrs"))
+        values_to_remove = ['csrfmiddlewaretoken', 'device', 'model', 'initial-parametrs']
+        parametrs = {key: request.POST.get(key)
+                     for key in request.POST if key not in values_to_remove}
         device.parametrs = parametrs
         check_errors = valid(device.device_type_id, parametrs, device.device_model)
+        check_errors.convert()
         try:
             check_errors.validation()
             if check_errors.validation()['status'] == 'sucsess':

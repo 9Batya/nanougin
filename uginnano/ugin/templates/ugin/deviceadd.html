@@ -1,23 +1,30 @@
+{% load static %}
 <html>
-{{ form.media.css }}
-{{ form.media.js }}
 <head>
+    <link rel="stylesheet" href="{% static 'ugin/style.css' %}">
+    <meta charset="utf-8" />
+    <title>main</title>
+</head>
     <meta charset="utf-8" />
     <title>create device</title>
 </head>
 <body>
-    <h1>Тип устройства: {{ type_name }}</h1>
-    <h1>Модель устройства: {{ model }}</h1>
-    <form method="POST" action="/ugin/device/save/">
-        {% csrf_token %}
-        {{ form.as_table }}
-        <input type="hidden" name="type" value="{{ type_id }}">
-        <input type="hidden" name="model" value="{{ model }}">
-        <input type="submit" value="Сохранить">
-    </form>
-    <form method="post" action="/ugin/">
-        {% csrf_token %}
-        <input type="submit" value="Вернуться к приложению" >
-    </form>
+    <div class="wrapper">
+        <div>
+            <h1>Тип устройства: {{ type_name }}</h1>
+            <h1>Модель устройства: {{ model }}</h1>
+            <form method="POST" action="/ugin/device/save/">
+                {% csrf_token %}
+                {{ form.as_table }}
+                <input type="hidden" name="type" value="{{ type_id }}">
+                <input type="hidden" name="model" value="{{ model }}">
+                <input type="submit" value="Сохранить">
+            </form>
+            <form method="post" action="/ugin/">
+                {% csrf_token %}
+                <input type="submit" value="Вернуться к приложению" >
+            </form>
+        </div>
+    </div>
 </body>
 </html>

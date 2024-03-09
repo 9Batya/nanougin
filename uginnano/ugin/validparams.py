@@ -1,15 +1,33 @@
 from django.core.exceptions import ValidationError
 import ipaddress
 import re
+
 """
 Валидация параметров, используется в формах и модели Device, валидируются типы данных, MAC, ip. Входные данные
 device_type_id, parametrs, device_model экземпляра Device
 """
+
+
 class valid:
     def __init__(self, device_type_id, parametrs, devicemodel):
         self.device_type_id = device_type_id
         self.parametrs = parametrs
         self.device_model = devicemodel
+
+    # Из-за того, что deviceform выдает строки, нужно их конвертировать
+    def convert(self):
+        for key, value in self.parametrs.items():
+            if value.lower() == 'true':
+                self.parametrs[key] = True
+            elif value.lower() == 'false':
+                self.parametrs[key] = False
+            try:
+                value = int(value)
+                self.parametrs[key] = value
+            except ValueError:
+                pass
+
+    #Валидация
     def validation(self):
         regexmac = re.compile(r'^[a-z0-9]{2}:[a-z0-9]{2}:[a-z0-9]{2}:[a-z0-9]{2}:'
                               r'[a-z0-9]{2}:[a-z0-9]{2}$')
@@ -36,5 +54,3 @@ class valid:
                     except Exception as exp:
                         raise ValidationError(f'Ошибка: "{exp}"')
         return {'status': 'sucsess'}
-
-
