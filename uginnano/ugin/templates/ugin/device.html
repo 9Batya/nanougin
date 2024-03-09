@@ -8,14 +8,10 @@
 <body>
 <div class="wrapper">
     <div>
+        <h3>Тип устройства: {{ devicetype }}</h3>
+        <h3>Модель устройства: {{ devicemodel }}</h3>
         <form method="POST" action="/ugin/device/edit/">
             {% csrf_token %}
-            {% csrf_token %}
-            <label>Тип устройства:</label>
-            <span>{{ devicetype }}</span>
-
-            <label>Модель устройства:</label>
-            <span>{{ devicemodel }}</span>
             {{ form.as_table }}
             <input type="hidden" name="device" value="{{ device }}">
             <input type="hidden" name="model" value="{{ devicemodel }}">

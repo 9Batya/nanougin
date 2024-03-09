@@ -8,7 +8,7 @@
 <body>
 <div class="wrapper">
     <div>
-        <h2>Выберите тип устройства и модель</h2>
+        <h3>Выберите тип устройства и модель</h3>
         {% csrf_token %}
         <form method="GET">
             {{ form.as_table }}

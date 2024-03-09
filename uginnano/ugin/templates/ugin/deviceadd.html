@@ -11,8 +11,8 @@
 <body>
 <div class="wrapper">
     <div>
-        <h1>Тип устройства: {{ type_name }}</h1>
-        <h1>Модель устройства: {{ model }}</h1>
+        <h3>Тип устройства: {{ type_name }}</h3>
+        <h3>Модель устройства: {{ model }}</h3>
         <form method="POST" action="/ugin/device/save/">
             {% csrf_token %}
             {{ form.as_table }}
