@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'ugin.apps.UginConfig',
     'django_json_widget',
     'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
