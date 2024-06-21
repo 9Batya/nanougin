@@ -54,3 +54,4 @@ class valid:
                     except Exception as exp:
                         raise ValidationError(f'Ошибка: "{exp}"')
         return {'status': 'sucsess'}
+

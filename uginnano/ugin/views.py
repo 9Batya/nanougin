@@ -44,7 +44,7 @@ def device_add(request):
 # view для сохранения, используется в html deviceadd
 def device_save(request):
     if request.method == "POST":
-        values_to_remove = ['csrfmiddlewaretoken', 'type', 'model', 'initial-parametrs']
+        values_to_remove = ('csrfmiddlewaretoken', 'type', 'model', 'initial-parametrs')
         parametrs = {key: request.POST.get(key)
                      for key in request.POST if key not in values_to_remove}
         type_id = request.POST.get("type")
@@ -69,7 +69,7 @@ def device_edit(request):
     if request.method == "POST":
         device_id = request.POST.get("device")
         device = Device.objects.get(pk=device_id)
-        values_to_remove = ['csrfmiddlewaretoken', 'device', 'model', 'initial-parametrs']
+        values_to_remove = ('csrfmiddlewaretoken', 'device', 'model', 'initial-parametrs')
         parametrs = {key: request.POST.get(key)
                      for key in request.POST if key not in values_to_remove}
         device.parametrs = parametrs
