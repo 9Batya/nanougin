@@ -9,11 +9,15 @@ from .validparams import valid
 
 
 class DeviceType(models.Model):
-    type_name = models.CharField(max_length=200)
-    parametr_names = models.ManyToManyField('Parametr')
+    type_name = models.CharField(max_length=200, verbose_name='Тип устройства')
+    parametr_names = models.ManyToManyField('Parametr', verbose_name='Параметры')
 
     def __str__(self):
         return self.type_name
+
+    class Meta:
+        verbose_name_plural = 'Типы устройств'
+        verbose_name = 'Тип устройства'
 
 
 # Параметры устройств, parametr_type нужен для валидации вводимых данных
@@ -23,21 +27,31 @@ class Parametr(models.Model):
         ('str', 'str'),
         ('bool', 'bool'),
     ]
-    parametr_name = models.CharField(max_length=200)
-    parametr_type = models.CharField(max_length=200, default=None, choices=type_list)
+    parametr_name = models.CharField(max_length=200, verbose_name='Имя параметра')
+    parametr_type = models.CharField(max_length=200, default=None, choices=type_list, verbose_name='Тип данных')
 
     def __str__(self):
         return self.parametr_name
+
+    class Meta:
+        verbose_name_plural = 'Параметры'
+        verbose_name = 'Параметр'
+
 
 
 # Модель устройства, связан внешним ключом с devicetype
 class DeviceModel(models.Model):
     device_type = models.ForeignKey(DeviceType, on_delete=models.CASCADE,
-                                    related_name='device_type')
-    model_name = models.CharField(max_length=200)
+                                    related_name='device_type', verbose_name='Тип устройства')
+    model_name = models.CharField(max_length=200, verbose_name='Название модели')
 
     def __str__(self):
         return self.model_name
+
+    class Meta:
+        verbose_name_plural = 'Модели устройств'
+        verbose_name = 'Модель устройства'
+
 
 
 """
@@ -50,9 +64,10 @@ class Device(models.Model):
     model_list = list
 
     device_type_id = models.ForeignKey(DeviceType, on_delete=models.CASCADE,
-                                       related_name='device_type_id', default=None)
-    device_model = models.CharField(max_length=200, default=None, choices=model_list, null=True, blank=True)
-    parametrs = models.JSONField(default=dict, null=True, blank=True)
+                                       related_name='device_type_id', default=None, verbose_name='Тип устройства')
+    device_model = models.CharField(max_length=200, default=None, choices=model_list, null=True,
+                                    blank=True, verbose_name='Модель устройства')
+    parametrs = models.JSONField(default=dict, null=True, blank=True, verbose_name='Параметры устройства')
 
     def clean(self):
         check_errors = valid(self.device_type_id, self.parametrs, self.device_model)
@@ -63,3 +78,8 @@ class Device(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    class Meta:
+        verbose_name_plural = 'Устройства'
+        verbose_name = 'Устройство'
+
